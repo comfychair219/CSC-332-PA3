@@ -24,6 +24,7 @@ void printGraph(vector<int> adj[], int V)
         printf("\n");
     }
 
+	//this part just forces the program to wait on you, push q to leave
 	char answer;
 	cin >> answer;
 	if(answer == 'q') {
