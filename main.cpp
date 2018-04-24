@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
+void generateGraph(), adjList(), adjMatrix();
+void choice(int i);
  
 // A utility function to add an edge in an
 // undirected graph.
@@ -33,19 +36,149 @@ void printGraph(vector<int> adj[], int V)
 	}
 		
 }
+
+void menu() {
+    int input;
+    cout << "*CSC 332*\n"
+         << "*MENU OPTIONS*\n\n";
+    cout << "1 - Generate Graph\n"
+         << "2 - View Adjacency List\n"
+         << "3 - View Adjacency Matrix\n"
+		 << "4 - View Adjacency Matrix\n";
+    cout << "Enter a menu option: ";
+    cin >> input;
+    cin.ignore();
+    cout << endl;
+    choice(input);
+}
+
+void returnMenu() {
+    char input;
+    cout << "Return to Main Menu? (y/n)\n";
+    cin >> input;
+    cout << endl;
+    while (input) {
+        switch (input) {
+            case 'y':
+                menu();
+                break;
+
+            case 'n':
+                break;
+
+            default:
+                cout << "Invalid Input. Returning to main menu.\n";
+                menu();
+        }
+        break;
+    }
+}
+
+void choice(int input) {
+    while (input) {
+        switch (input) {
+            case 1:
+                generateGraph();
+                returnMenu();
+                break;
+            case 2:
+                adjList();
+                returnMenu();
+                break;
+            case 3:
+                adjMatrix();
+                returnMenu();
+                break;
+            case 4:
+                exit(1);
+            default:
+                cout << "Invalid Menu Option. Please enter new option: ";
+                cin >> input;
+                choice(input);
+                cin.ignore();
+                break;
+        }
+    }
+}
+
+void generateGraph() {
+}
+
+void adjList() {
+	vector <int> adj[10];
+
+	 int x, y, nodes, edges;
+        cin >> nodes;       //Number of nodes
+        cin >> edges;       //Number of edges
+        for(int i = 0;i < edges;++i)
+        {
+                cin >> x >> y;
+            adj[x].push_back(y);        //Insert y in adjacency list of x
+         }
+    for(int i = 1;i <= nodes;++i)
+    {   
+            cout << "Adjacency list of node " << i << ": ";
+        for(int j = 0;j < adj[i].size();++j)
+            {
+            if(j == adj[i].size() - 1)
+                    cout << adj[i][j] << endl;
+            else
+                cout << adj[i][j] << " --> ";
+    }
+    }
+    
+	int input;
+		cout << "9 to exit" << endl;
+		cin >> input;
+		if (input == 9) {
+		}
+
+}
+
+void adjMatrix() {
+
+	bool A[10][10];
+
+	int x, y, nodes, edges;
+        
+		for(int i = 0;i < 10;++i)
+            for(int j = 0;j < 10;++j)
+                A[i][j] = false;
+
+        cin >> nodes;       //Number of nodes
+        cin >> edges;       //Number of edges
+        for(int i = 0;i < edges;++i)
+        {
+            cin >> x >> y;
+            A[x][y] = true;     //Mark the edges from vertex x to vertex y
+       }
+
+		for(int i = 0;i < 10;++i) {
+            for(int j = 0;j < 10;++j) {
+
+				if(i || j == 10) {
+				
+					cout << "/n";
+				}
+                cout << A[i][j];
+			}
+		}
+		int input;
+		cout << "9 to exit" << endl;
+		cin >> input;
+		if (input == 9) {
+		}
+     
+	}
  
 // Driver code
 int main()
 {
-    int const V = 5;
-    vector<int> adj[V];
-    addEdge(adj, 0, 1);
-    addEdge(adj, 0, 4);
-    addEdge(adj, 1, 2);
-    addEdge(adj, 1, 3);
-    addEdge(adj, 1, 4);
-    addEdge(adj, 2, 3);
-    addEdge(adj, 3, 4);
-    printGraph(adj, V);
+
+//	menu();
+	//adjMatrix();
+
+	//adjList();
+
     return 0;
 }
