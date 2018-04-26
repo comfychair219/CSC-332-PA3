@@ -1,40 +1,50 @@
 // A simple representation of graph using STL
 #include <iostream>
 #include <vector>
+#include <map>
+#include <string>
 using namespace std;
 
 void generateGraph(), adjList(), adjMatrix();
 void choice(int i);
  
-// A utility function to add an edge in an
-// undirected graph.
-void addEdge(vector<int> adj[], int u, int v)
+struct vertex {
+    typedef pair<int, vertex*> ve;
+    vector<ve> adj; //cost of edge, destination vertex
+    string name;
+    vertex(string s) : name(s) {}
+};
+
+class graph
 {
-    adj[u].push_back(v);
-    adj[v].push_back(u);
-}
- 
-// A utility function to print the adjacency list
-// representation of graph
-void printGraph(vector<int> adj[], int V)
+public:
+    typedef map<string, vertex *> vmap;
+    vmap work;
+    void addvertex(const string&);
+    void addedge(const string& from, const string& to, double cost);
+};
+
+
+
+void graph::addvertex(const string &name)
 {
-    for (int v = 0; v < V; ++v)
+    vmap::iterator itr = work.find(name);
+    if (itr == work.end())
     {
-        cout << "\n Adjacency list of vertex "
-             << v << "\n head ";
-        for (auto x : adj[v])
-           cout << "-> " << x;
-        printf("\n");
+        vertex *v;
+        v = new vertex(name);
+        work[name] = v;
+        return;
     }
+    cout << "\nVertex already exists!";
+}
 
-	//this part just forces the program to wait on you, push q to leave
-	char answer;
-	cin >> answer;
-	if(answer == 'q') {
-
-		cout << "yep" << endl;
-	}
-		
+void graph::addedge(const string& from, const string& to, double cost)
+{
+    vertex *f = (work.find(from)->second);
+    vertex *t = (work.find(to)->second);
+    pair<int, vertex *> edge = make_pair(cost, t);
+    f->adj.push_back(edge);
 }
 
 void menu() {
@@ -102,6 +112,13 @@ void choice(int input) {
 }
 
 void generateGraph() {
+	graph usrgraph;
+
+	usrgraph.addvertex("vert1");
+
+	usrgraph.addvertex("vert2");
+
+	usrgraph.addedge("vert1", "vert2", 2); //2 vertices connected by an edge of weight 2
 }
 
 void adjList() {
