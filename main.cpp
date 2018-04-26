@@ -55,10 +55,7 @@ public:
     }
 };
 
- 
-/*
- * Adjacency List Node
- */ 
+
 struct AdjListNode
 {
     int dest;
@@ -202,8 +199,6 @@ void DFSGraph::DFS(int v)
 }
 
 
-
-
 void menu() {
     int input;
     cout << "*CSC 332*\n"
@@ -275,12 +270,25 @@ void generateGraph() {
 	cout << "Enter number of Vertices: ";
 	cin >> vertNum;
 
-	vector<int> arr(vertNum);
+	
+	int** arr = new int*[vertNum];
+
+	
 
 	cout << "Enter edges:" << endl;
 	cout << "Enter q to quit" << endl;
 
-	//
+	int vert1;
+	int vert2;
+
+	cin >> vert1;
+	cin >> vert2;
+
+	for(int i = 0; i < vertNum; ++i) {
+    
+		arr[vert1][vert2];
+
+	}
 
 	int quit;
 	cin >> quit;
@@ -353,8 +361,13 @@ void DFS() {
     cout << "Following is Depth First Traversal"
             " (starting from vertex given) \n";
 
+	cout << "Enter the node you want to start with" << endl;
 
-    g.DFS(2);
+	int start;
+
+	cin >> start;
+
+    g.DFS(start);
 
 }
  
@@ -363,9 +376,6 @@ int main()
 {
 
 	menu();
-	//adjMatrix();
-
-	//adjList();
 
     return 0;
 }
