@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include<list>
 using namespace std;
 
 void generateGraph(), adjList(), adjMatrix();
@@ -79,8 +80,11 @@ class adjListGraph
 {
     private:
         int V;
+
         struct AdjList* array;
+		
     public:
+
         adjListGraph(int V)
         {
             this->V = V;
@@ -128,8 +132,74 @@ class adjListGraph
                 cout<<endl;
             }
         }
+
+
 };
 
+
+
+class DFSGraph
+{
+    int V;    // No. of vertices
+ 
+    // Pointer to an array containing
+    // adjacency lists
+    list<int> *adj;
+ 
+    // A recursive function used by DFS
+    void DFSUtil(int v, bool visited[]);
+public:
+    DFSGraph(int V);   // Constructor
+ 
+    // function to add an edge to graph
+    void addEdge(int v, int w);
+ 
+    // DFS traversal of the vertices
+    // reachable from v
+    void DFS(int v);
+};
+ 
+
+
+DFSGraph::DFSGraph(int V)
+{
+    this->V = V;
+    adj = new list<int>[V];
+}
+ 
+void DFSGraph::addEdge(int v, int w)
+{
+    adj[v].push_back(w); // Add w to v’s list.
+}
+ 
+void DFSGraph::DFSUtil(int v, bool visited[])
+{
+    // Mark the current node as visited and
+    // print it
+    visited[v] = true;
+    cout << v << " ";
+ 
+    // Recur for all the vertices adjacent
+    // to this vertex
+    list<int>::iterator i;
+    for (i = adj[v].begin(); i != adj[v].end(); ++i)
+        if (!visited[*i])
+            DFSUtil(*i, visited);
+}
+ 
+// DFS traversal of the vertices reachable from v.
+// It uses recursive DFSUtil()
+void DFSGraph::DFS(int v)
+{
+    // Mark all the vertices as not visited
+    bool *visited = new bool[V];
+    for (int i = 0; i < V; i++)
+        visited[i] = false;
+ 
+    // Call the recursive helper function
+    // to print DFS traversal
+    DFSUtil(v, visited);
+}
 
 
 
@@ -187,7 +257,8 @@ void choice(int input) {
                 returnMenu();
                 break;
             case 4:
-                exit(1);
+				DFS();
+                //exit(1);
             default:
                 cout << "Invalid Menu Option. Please enter new option: ";
                 cin >> input;
@@ -206,7 +277,10 @@ void generateGraph() {
 
 	vector<int> arr(vertNum);
 
-	cout << arr.size();
+	cout << "Enter edges:" << endl;
+	cout << "Enter q to quit" << endl;
+
+	//
 
 	int quit;
 	cin >> quit;
@@ -225,6 +299,7 @@ void adjList() {
     gh.addEdge(1, 4);
     gh.addEdge(2, 3);
     gh.addEdge(3, 4);
+
  
     // print the adjacency list representation of the above graph
     gh.printGraph();
@@ -263,6 +338,24 @@ void adjMatrix() {
 
 	
      
+}
+
+void DFS() {
+
+    DFSGraph g(4);
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 2);
+    g.addEdge(2, 0);
+    g.addEdge(2, 3);
+    g.addEdge(3, 3);
+ 
+    cout << "Following is Depth First Traversal"
+            " (starting from vertex given) \n";
+
+
+    g.DFS(2);
+
 }
  
 // Driver code
